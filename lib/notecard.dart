@@ -25,7 +25,7 @@ class NoteCardWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     /// Pick colors from the accent colors based on index
     final color = _lightColors[index % _lightColors.length];
-    final time = note.createdTime.toIso8601String();
+
     final minHeight = getMinHeight(index);
 
     return Card(

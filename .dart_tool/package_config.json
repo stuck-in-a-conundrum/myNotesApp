@@ -2,6 +2,12 @@
   "configVersion": 2,
   "packages": [
     {
+      "name": "animations",
+      "rootUri": "file:///home/codrishti/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/animations-2.0.2",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "async",
       "rootUri": "file:///home/codrishti/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/async-2.8.1",
       "packageUri": "lib/",
@@ -182,7 +188,7 @@
       "languageVersion": "2.12"
     }
   ],
-  "generated": "2021-11-13T12:50:35.613471Z",
+  "generated": "2021-11-13T14:08:07.467631Z",
   "generator": "pub",
   "generatorVersion": "2.14.2"
 }

@@ -5,7 +5,12 @@ import 'package:todo_sqlite/note_form.dart';
 
 class EditNotePage extends StatefulWidget {
   final Note? note;
-  const EditNotePage({Key? key, this.note}) : super(key: key);
+  final Function refresh;
+  const EditNotePage({
+    Key? key,
+    this.note,
+    required this.refresh,
+  }) : super(key: key);
 
   @override
   _EditNotePageState createState() => _EditNotePageState();
@@ -60,6 +65,7 @@ class _EditNotePageState extends State<EditNotePage> {
         await add();
       }
     }
+    widget.refresh();
     Navigator.of(context).pop();
   }
 

@@ -5,6 +5,7 @@ import 'package:todo_sqlite/database/options.dart';
 import 'package:todo_sqlite/notecard.dart';
 import 'package:todo_sqlite/pages/edit_page.dart';
 import '../models/notes_model.dart';
+import 'package:animations/animations.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -40,15 +41,7 @@ class _HomePageState extends State<HomePage> {
         title: const Text('My Notes'),
       ),
       body: Center(child: buildNotes(notes)),
-      floatingActionButton: FloatingActionButton(
-          child: const Icon(Icons.add),
-          tooltip: 'Add Note',
-          onPressed: () async {
-            await Navigator.of(context).push(
-              MaterialPageRoute(builder: (context) => const EditNotePage()),
-            );
-            refreshNotes();
-          }),
+      floatingActionButton: buildAddButton(context, refreshNotes),
     );
   }
 
@@ -62,16 +55,40 @@ class _HomePageState extends State<HomePage> {
         itemBuilder: (context, index) {
           final note = notes[notes.length - index - 1];
 
-          return GestureDetector(
-            onTap: () async {
-              await Navigator.of(context).push(
-                MaterialPageRoute(
-                    builder: (context) => EditNotePage(note: note)),
-              );
-              refreshNotes();
-            },
-            child: NoteCardWidget(note: note, index: index),
+          return OpenContainer(
+            closedBuilder: (context, void openContainer) =>
+                NoteCardWidget(note: note, index: index),
+            closedColor: Colors.transparent,
+            openBuilder: (context, _) =>
+                EditNotePage(refresh: refreshNotes, note: note),
+            transitionDuration: const Duration(milliseconds: 600),
+            transitionType: ContainerTransitionType.fade,
           );
         },
       );
+}
+
+Widget buildAddButton(BuildContext context, Function refresh) {
+  return OpenContainer(
+    openBuilder: (context, _) {
+      return EditNotePage(
+        refresh: refresh,
+      );
+    },
+    closedShape: const CircleBorder(),
+    transitionDuration: const Duration(milliseconds: 750),
+    transitionType: ContainerTransitionType.fade,
+    closedBuilder: (context, void openContainer) => Container(
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        color: Theme.of(context).primaryColor,
+      ),
+      child: const Icon(
+        Icons.add,
+        size: 30,
+      ),
+      height: 50,
+      width: 50,
+    ),
+  );
 }
