@@ -1,3 +1,5 @@
+// ignore_for_file: non_constant_identifier_names
+
 import 'package:flutter/material.dart';
 
 class NoteForm extends StatelessWidget {
@@ -8,8 +10,8 @@ class NoteForm extends StatelessWidget {
 
   const NoteForm({
     Key? key,
-    this.title = '',
-    this.desc = '',
+    this.title="",
+    this.desc="",
     required this.changedTitle,
     required this.changedDesc,
   }) : super(key: key);
@@ -36,14 +38,14 @@ class NoteForm extends StatelessWidget {
   _buildTitle() => TextFormField(
         initialValue: title,
         style: const TextStyle(
-          color: Colors.white,
+          color:Colors.black,
           fontWeight: FontWeight.bold,
           fontSize: 24,
         ),
         decoration: const InputDecoration(
           hintText: 'Title',
           hintStyle: TextStyle(
-            color: Colors.white,
+            color: Colors.black,
             fontWeight: FontWeight.bold,
             fontSize: 27,
           ),
@@ -56,13 +58,13 @@ class NoteForm extends StatelessWidget {
         initialValue: desc,
         maxLines: 9,
         style: const TextStyle(
-          color: Colors.white54,
+          color: Colors.black87,
           fontSize: 20,
         ),
         decoration: const InputDecoration(
           hintText: 'Description',
           hintStyle: TextStyle(
-            color: Colors.white54,
+            color: Colors.black87,
             fontSize: 20,
           ),
           border: InputBorder.none,

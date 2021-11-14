@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'models/notes_model.dart';
+import '../models/notes_model.dart';
 
-final _lightColors = [
-  Colors.amber.shade300,
-  Colors.lightGreen.shade300,
-  Colors.lightBlue.shade300,
-  Colors.orange.shade300,
-  Colors.pinkAccent.shade100,
-  Colors.tealAccent.shade100
+final lightColors = [
+  Colors.amber.shade200,
+  Colors.lightGreen.shade200,
+  Colors.lightBlue.shade100,
+  Colors.orange.shade100,
+  Colors.pink[100],
+  Colors.tealAccent.shade100,
+  Colors.lime[200],
 ];
 
 class NoteCardWidget extends StatelessWidget {
@@ -24,7 +25,7 @@ class NoteCardWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     /// Pick colors from the accent colors based on index
-    final color = _lightColors[index % _lightColors.length];
+    final color = lightColors[index % lightColors.length];
 
     final minHeight = getMinHeight(index);
 
@@ -76,13 +77,13 @@ class NoteCardWidget extends StatelessWidget {
   double getMinHeight(int index) {
     switch (index % 4) {
       case 0:
-        return 100;
+        return 120;
       case 1:
         return 150;
       case 2:
-        return 150;
+        return 130;
       case 3:
-        return 100;
+        return 110;
       default:
         return 100;
     }

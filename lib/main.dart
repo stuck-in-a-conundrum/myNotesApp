@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'sqlite_demo',
+      title: 'Notes',
       home: const HomePage(),
       theme: ThemeData(
         primarySwatch: Colors.orange,

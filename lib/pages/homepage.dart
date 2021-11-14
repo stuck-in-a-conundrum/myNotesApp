@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:todo_sqlite/database/notes_db.dart';
 import 'package:todo_sqlite/database/options.dart';
-import 'package:todo_sqlite/notecard.dart';
+import 'package:todo_sqlite/widgets/notecard.dart';
 import 'package:todo_sqlite/pages/edit_page.dart';
+import 'package:todo_sqlite/widgets/search_widget.dart';
 import '../models/notes_model.dart';
 import 'package:animations/animations.dart';
 
@@ -34,14 +35,28 @@ class _HomePageState extends State<HomePage> {
     setState(() => notes = tnotes);
   }
 
+  search() {
+    return IconButton(
+      icon: const Icon(Icons.search),
+      onPressed: () {
+        showSearch(
+          context: context,
+          delegate: Search(notes: notes, refresh: refreshNotes),
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
         title: const Text('My Notes'),
+        actions: [search()],
       ),
       body: Center(child: buildNotes(notes)),
-      floatingActionButton: buildAddButton(context, refreshNotes),
+      floatingActionButton: buildAddButton(context),
     );
   }
 
@@ -57,38 +72,43 @@ class _HomePageState extends State<HomePage> {
 
           return OpenContainer(
             closedBuilder: (context, void openContainer) =>
-                NoteCardWidget(note: note, index: index),
+                NoteCardWidget(note: note, index: notes.length - index - 1),
             closedColor: Colors.transparent,
-            openBuilder: (context, _) =>
-                EditNotePage(refresh: refreshNotes, note: note),
+            openBuilder: (context, _) => EditNotePage(
+              refresh: refreshNotes,
+              note: note,
+              noteColor:
+                  lightColors[(notes.length - index - 1) % lightColors.length],
+            ),
             transitionDuration: const Duration(milliseconds: 600),
             transitionType: ContainerTransitionType.fade,
           );
         },
       );
-}
 
-Widget buildAddButton(BuildContext context, Function refresh) {
-  return OpenContainer(
-    openBuilder: (context, _) {
-      return EditNotePage(
-        refresh: refresh,
-      );
-    },
-    closedShape: const CircleBorder(),
-    transitionDuration: const Duration(milliseconds: 750),
-    transitionType: ContainerTransitionType.fade,
-    closedBuilder: (context, void openContainer) => Container(
-      decoration: BoxDecoration(
-        shape: BoxShape.circle,
-        color: Theme.of(context).primaryColor,
+  Widget buildAddButton(BuildContext context) {
+    return OpenContainer(
+      openBuilder: (context, _) {
+        return EditNotePage(
+          refresh: refreshNotes,
+        );
+      },
+      closedShape: const CircleBorder(),
+      transitionDuration: const Duration(milliseconds: 650),
+      transitionType: ContainerTransitionType.fade,
+      closedColor: Theme.of(context).primaryColor,
+      closedBuilder: (context, void openContainer) => Container(
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          color: Theme.of(context).primaryColor,
+        ),
+        child: const Icon(
+          Icons.add,
+          size: 30,
+        ),
+        height: 50,
+        width: 50,
       ),
-      child: const Icon(
-        Icons.add,
-        size: 30,
-      ),
-      height: 50,
-      width: 50,
-    ),
-  );
+    );
+  }
 }

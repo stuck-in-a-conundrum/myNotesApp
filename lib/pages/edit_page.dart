@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:todo_sqlite/database/options.dart';
 import 'package:todo_sqlite/models/notes_model.dart';
-import 'package:todo_sqlite/note_form.dart';
+import 'package:todo_sqlite/widgets/note_form.dart';
 
 class EditNotePage extends StatefulWidget {
   final Note? note;
   final Function refresh;
+  final Color? noteColor;
+
   const EditNotePage({
     Key? key,
     this.note,
+    this.noteColor,
     required this.refresh,
   }) : super(key: key);
 
@@ -30,7 +33,9 @@ class _EditNotePageState extends State<EditNotePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: widget.noteColor ?? Colors.grey[300],
       appBar: AppBar(
+        backgroundColor: widget.noteColor,
         actions: [remove()],
         title: const Text('Add or Edit Note'),
       ),
@@ -86,7 +91,8 @@ class _EditNotePageState extends State<EditNotePage> {
     } else {
       final id = widget.note!.id;
       await delete(id!);
+      widget.refresh();
+      Navigator.of(context).pop();
     }
-    Navigator.of(context).pop();
   }
 }

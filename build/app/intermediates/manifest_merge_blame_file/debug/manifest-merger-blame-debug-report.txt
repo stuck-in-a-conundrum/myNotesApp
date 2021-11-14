@@ -22,8 +22,8 @@
 18        android:debuggable="true"
 19        android:icon="@mipmap/ic_launcher"
 19-->/home/codrishti/Desktop/flutter apps/notes_sqlite_flutter/android/app/src/main/AndroidManifest.xml:5:9-43
-20        android:label="todo_sqlite" >
-20-->/home/codrishti/Desktop/flutter apps/notes_sqlite_flutter/android/app/src/main/AndroidManifest.xml:4:9-36
+20        android:label="MyNotes" >
+20-->/home/codrishti/Desktop/flutter apps/notes_sqlite_flutter/android/app/src/main/AndroidManifest.xml:4:9-32
 21        <activity
 21-->/home/codrishti/Desktop/flutter apps/notes_sqlite_flutter/android/app/src/main/AndroidManifest.xml:6:9-34:20
 22            android:name="com.example.todo_sqlite.MainActivity"
