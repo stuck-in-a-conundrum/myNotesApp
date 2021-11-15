@@ -41,25 +41,31 @@ class Search extends SearchDelegate<String> {
   @override
   Widget buildSuggestions(BuildContext context) {
     // shown data on search
-    final suggestNotes =
-        List<String>.generate(notes.length, (i) => notes[i].title);
+    final suggestNotes = List<List>.generate(
+      notes.length,
+      (i) => [notes[i].title, notes[i].id],
+    );
     final shownTitles = query.isEmpty
         ? suggestNotes
         : suggestNotes
-            .where((element) => element.startsWith(query.toLowerCase()))
+            .where((element) => element[0].startsWith(query.toLowerCase()))
             .toList();
     return ListView.builder(
       itemBuilder: (context, index) => ListTile(
         title: Text(
-          shownTitles[index],
+          shownTitles[index][0],
           style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
         ),
         tileColor: Colors.white,
-        onTap: () => Navigator.of(context).pushReplacement(MaterialPageRoute(
+        onTap: () => Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
             builder: (context) => EditNotePage(
-                  refresh: refresh,
-                  note: notes[index],
-                ))),
+              refresh: refresh,
+              note: notes[notes.indexWhere(
+                  (element) => element.id == shownTitles[index][1], index)],
+            ),
+          ),
+        ),
       ),
       itemCount: shownTitles.length,
     );
