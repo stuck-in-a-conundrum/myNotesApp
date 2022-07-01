@@ -5,19 +5,22 @@ import 'package:flutter/material.dart';
 class NoteForm extends StatelessWidget {
   final String? title;
   final String? desc;
+  final String? color;
   final ValueChanged<String> changedTitle;
   final ValueChanged<String> changedDesc;
 
   const NoteForm({
     Key? key,
-    this.title="",
-    this.desc="",
+    this.title = "",
+    this.desc = "",
+    this.color = "",
     required this.changedTitle,
     required this.changedDesc,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    print("here");
     return SingleChildScrollView(
       child: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -38,7 +41,7 @@ class NoteForm extends StatelessWidget {
   _buildTitle() => TextFormField(
         initialValue: title,
         style: const TextStyle(
-          color:Colors.black,
+          color: Colors.black,
           fontWeight: FontWeight.bold,
           fontSize: 24,
         ),

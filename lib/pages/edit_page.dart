@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:todo_sqlite/api_manager/notes_helper.dart';
 import 'package:todo_sqlite/database/options.dart';
 import 'package:todo_sqlite/models/notes_model.dart';
 import 'package:todo_sqlite/widgets/note_form.dart';
@@ -6,12 +7,14 @@ import 'package:todo_sqlite/widgets/note_form.dart';
 class EditNotePage extends StatefulWidget {
   final Note? note;
   final Function refresh;
+  final bool isLogged;
   final Color? noteColor;
 
   const EditNotePage({
     Key? key,
     this.note,
     this.noteColor,
+    required this.isLogged,
     required this.refresh,
   }) : super(key: key);
 
@@ -63,6 +66,7 @@ class _EditNotePageState extends State<EditNotePage> {
   remove() => IconButton(onPressed: deleteNote, icon: const Icon(Icons.delete));
 
   addupdateNote() async {
+    print(title);
     if (title.isNotEmpty) {
       if (widget.note != null) {
         await updateNote();
@@ -74,15 +78,29 @@ class _EditNotePageState extends State<EditNotePage> {
     Navigator.of(context).pop();
   }
 
-  add() {
-    final note =
-        Note(title: title, description: desc, createdTime: DateTime.now());
-    create(note);
+  add() async {
+    print(widget.isLogged);
+    final note = Note(
+      title: title,
+      description: desc,
+      createdTime: DateTime.now(),
+      color: widget.noteColor.toString(),
+    );
+    //print(note.toString());
+    return widget.isLogged
+        ? await TodoManager().addNote(note)
+        : await create(note);
   }
 
-  updateNote() {
-    final note = widget.note!.copy(title: title, description: desc);
-    return update(note);
+  updateNote() async {
+    final note = widget.note!.copy(
+      title: title,
+      description: desc,
+      color: widget.noteColor.toString(),
+    );
+    return widget.isLogged
+        ? await TodoManager().updateNote(note)
+        : await update(note);
   }
 
   deleteNote() async {
@@ -90,7 +108,7 @@ class _EditNotePageState extends State<EditNotePage> {
       Navigator.of(context).pop;
     } else {
       final id = widget.note!.id;
-      await delete(id!);
+      widget.isLogged ? await TodoManager().deleteNote(id!) : await delete(id!);
       widget.refresh();
       Navigator.of(context).pop();
     }

@@ -15,7 +15,14 @@ class NotesDB {
     final dbPath = await getDatabasesPath();
     final path = dbPath + filePath;
 
-    return await openDatabase(path, version: 1, onCreate: _createDB);
+    return await openDatabase(path,
+        version: 2, onCreate: _createDB, onUpgrade: _onUpgrade);
+  }
+
+  void _onUpgrade(Database db, int oldVersion, int newVersion) {
+    if (oldVersion < newVersion) {
+      db.execute("ALTER TABLE $tableNotes ADD COLUMN color TEXT");
+    }
   }
 
   Future _createDB(Database db, int version) async {

@@ -17,8 +17,10 @@ class NoteCardWidget extends StatelessWidget {
     Key? key,
     required this.note,
     required this.index,
+    required this.isLogged,
   }) : super(key: key);
 
+  final bool isLogged;
   final Note note;
   final int index;
 

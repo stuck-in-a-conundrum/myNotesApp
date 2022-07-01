@@ -5,7 +5,8 @@ import 'package:todo_sqlite/pages/edit_page.dart';
 class Search extends SearchDelegate<String> {
   final List<Note> notes;
   final Function refresh;
-  Search({required this.notes, required this.refresh});
+  final bool isLogged;
+  Search({required this.notes, required this.refresh, required this.isLogged});
   @override
   List<Widget>? buildActions(BuildContext context) {
     // actions for the appBar
@@ -60,6 +61,7 @@ class Search extends SearchDelegate<String> {
         onTap: () => Navigator.of(context).pushReplacement(
           MaterialPageRoute(
             builder: (context) => EditNotePage(
+              isLogged: isLogged,
               refresh: refresh,
               note: notes[notes.indexWhere(
                   (element) => element.id == shownTitles[index][1], index)],
